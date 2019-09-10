@@ -1,4 +1,4 @@
-* [home1](home1)
-* [home2](home2)
-* [bar](bar/)
-* [bar/a](bar/a)
+- [Java知识点整合](java/Java知识点整合)
+- [JavaScript总结](javascript/JavaScript总结)
+- [ES6总结](es6/ES6总结)
+- Linux命令(linux/Linux命令)

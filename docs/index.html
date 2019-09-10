@@ -18,7 +18,8 @@
   <div id="app"></div>
   <script>
     window.$docsify = {
-	  repo:'https://littlewhite95.github.io/myDoc/',
+	  homepage:'HomePage.md',
+	  repo:'https://github.com/LittleWhite95/MyDoc',
       auto2top: true, //当路线改变时，滚动到屏幕的顶部。
       coverpage: true, //激活封面功能。如果为true，则会从中加载_coverpage.md。
       executeScript: true, //执行页面上的脚本。只解析第一个脚本标记（演示）。如果存在Vue，则默认开启。
@@ -26,7 +27,7 @@
       loadNavbar: true,//_navbar.md如果为真，则从_navbar.md文件加载navbar ，否则从指定的路径加载。
       mergeNavbar: true,//Navbar将在小屏幕上与侧边栏合并。
       maxLevel: 4,//最大的内容表级别。
-      subMaxLevel: 2,//在自定义边栏中添加目录（TOC）。
+      subMaxLevel: 4,//在自定义边栏中添加目录（TOC）。
       ga: 'UA-106147152-1',
       name: '导航',
       search: {
@@ -42,13 +43,13 @@
           '/': '搜索'
         }
       },
-      formatUpdated: '{MM}/{DD} {HH}:{mm}',
+      formatUpdated: '{YYYY}-{MM}-{DD} {HH}:{mm}',
       plugins: [
         function(hook, vm) {
           hook.beforeEach(function (html) {
             var url = 'https://github.com/PYfive/docsify/blob/master/' + vm.route.file
-            var editHtml = '[:memo: Edit Document](' + url + ')\n'
-            return 'Last modified {docsify-updated} '
+            var editHtml = '[:memo: 编辑 文档](' + url + ')\n'
+            return '最后修改于 {docsify-updated} '
               + editHtml+'\n----\n'+html
           })
         }

@@ -8,5 +8,6 @@
   * Not build static html files
 
 [常用资源](https://shimo.im/docs/MuiACIg1HlYfVxrj/)
-[GitHub](<https://littlewhite95.github.io/myDoc/>)
-[开始阅读](#Headline)
+[GitHub](<https://github.com/LittleWhite95/MyDoc>)
+[开始阅读](#Java知识点整合)
+
