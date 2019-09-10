@@ -47,7 +47,7 @@ Shift+PgDn	将终端显示向下滚动
 
 #### (1)查看用户
 
-![3-2.1-1](https://doc.shiyanlou.com/document-uid735639labid3timestamp1531731170296.png/wm)
+![image](https://doc.shiyanlou.com/document-uid735639labid3timestamp1531731170296.png/wm)
 
 ```
 $ who am i
