@@ -214,7 +214,7 @@ int(5.4+0.5)=>5
 int(5.6+0.5)=>6
 ```
 
-### (2)isinstance()获取变量的类型
+### （2）isinstance()获取变量的类型
 
 ```python
 isinstance(data)
