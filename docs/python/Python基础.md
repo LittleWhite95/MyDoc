@@ -196,15 +196,75 @@ Python3 的六个标准数据类型中：
 - **不可变数据（3 个）：**Number（数字）、String（字符串）、Tuple（元组）；
 - **可变数据（3 个）：**List（列表）、Dictionary（字典）、Set（集合）。
 
+## 2.循环和判断
+
+### （1）判断
+
+#### 	i. if...elif
+
+```python
+if a > 10:
+	print('h')
+elif a < 12:
+	print('w')
+else:
+    print('n')
+```
+
+#### ii.三元运算
+
+```python
+x if x > y else y
+值   条件      值
+#如果满足条件则为x,否则为y
+```
+
+#### iii.断言
+
+```python
+assert 3 > 4 //当需要确保程序中的某个条件为真时，使用assert，为假会跳出异常
+```
+
+### （2）循环
+
+#### i.while循环
+
+```python
+while 条件:
+	循环体
+```
+
+#### ii.for循环
+
+```python
+for 目标 in 表达式:
+	循环体
+```
+
+### （3）range()生成序列
+
+```python
+range([strat,]stop[,step=1])
+```
+
+> 1. 生成一个从strat参数到stop参数结束的数字序列
+> 2. 中括号的参数可选
+> 3. step=1表示默认值为1
+> 4. 不包括stop
+
 ## 1.一些常用方法
 
-### （1）int() 将一个数转成整型
+### （1）int() ,str(),float()
 
 ```python
 #小数向下取整
 int(5.5) -> 5
-#字符串转成整型
+#字符串转成int类型
 int("45") -> 45
+#转成string类型
+str(32) -> "32"
+#转成float类型
+float("31") -> 31.0
 ```
 
 小数采用四舍五入：**小数后加上一个0.5**
@@ -214,23 +274,39 @@ int(5.4+0.5)=>5
 int(5.6+0.5)=>6
 ```
 
-### （2）isinstance()获取变量的类型
+### （2）type(),isinstance()获取变量的类型
 
-```python
-isinstance(data)
+- type
+
+```
+type(value) ->变量类型 str、float、bool等
 ```
 
-### （3）print()打印字符串
+- isinstance
+
+```python
+isinstance(变量值,变量类型) -> True/False
+例子：
+isinstance(520,int) -> True
+```
+
+### （3）print()输出函数
 
 ```python
 #普通使用
 print("Hello World")
 
 #不换行输出
-print("Hello World",end="")
+print("Hello World",end="")//end表示以xx结尾替代原有的换行符
 ```
 
-### （4）python中的假
+### （4）input()输入函数
+
+```python
+input([promt]) ->显示提示文字
+```
+
+### （5）python中的假
 
 ```python
 False
