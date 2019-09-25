@@ -620,9 +620,42 @@ function add(x, y, f) {
 var x = add(-5, 6, Math.abs); // 11
 ```
 
+##### (1) map(重新生成)
 
+```
+array.map(function(currentValue,index,arr), thisValue)
+```
 
-##### (2) filter(筛选)
+> 必需function,currentValue,可选index，arr，thisValue
+
+传入我们自己的函数，就得到了一个新的`Array`作为结果：
+
+```javascript
+function pow(x) {
+    return x * x;
+}
+var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+var results = arr.map(pow); // [1, 4, 9, 16, 25, 36, 49, 64, 81]
+```
+
+##### (2)reduce(累计)
+
+```
+array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
+```
+
+接收两个参数，第一个必需为function,第二个可选为初始值。
+
+`reduce()`把结果继续和序列的下一个元素做累积计算，其效果就是：
+
+```javascript
+var arr = [1, 3, 5, 7, 9];
+arr.reduce(function (x, y) {
+    return x + y;
+}); // 25
+```
+
+##### (3) filter(筛选)
 
 > 用于把`Array`的某些元素过滤掉，然后返回剩下的元素。返回true or false。
 >
@@ -664,7 +697,7 @@ var r = arr.filter(function (element, index, self) {
   });
   ```
 
-##### (3) sort(排序)
+##### (4) sort(排序)
 
 > `Array`的`sort()`方法默认把所有元素先转换为String再排序，字符串根据ASCII码进行排序。
 >
@@ -728,7 +761,7 @@ a2; // ['A', 'B', 'C']
 a1 === a2; // true, a1和a2是同一对象
 ```
 
-##### (4) Array对象
+##### (5) Array对象
 
 - every()   判断数组的所有元素是否满足测试条件
 
