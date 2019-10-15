@@ -657,5 +657,234 @@ s.trimEnd() // "  abc"
 
 `matchAll()`方法返回一个正则表达式在当前字符串的所有匹配
 
+### 五、数值的扩展
 
+#### 1.Number.parseInt()
 
+> 转成int类型
+
+```javascript
+Number.parseInt('12.34') // 12
+```
+
+#### 2.Number.parseFloat() 
+
+> 转成浮点类型
+
+```javascript
+Number.parseFloat('123.45#') // 123.45
+```
+
+#### 3.Number.isInteger()
+
+> 判断一个数值是否为整数。（对数据精度的要求较高时，不建议使用）
+>
+> 如果参数不是数值，`Number.isInteger`返回`false`。
+
+```javascript
+Number.isInteger(25) // true
+Number.isInteger(25.0) // true
+//整数和浮点数采用的是同样的储存方法，所以 25 和 25.0 被视为同一个值。
+Number.isInteger(25.1) // false
+Number.isInteger() // false
+Number.isInteger(null) // false
+Number.isInteger('15') // false
+Number.isInteger(true) // false
+```
+
+#### 4.Math对象的拓展
+
+#### （1）Math.trunc() 返回整数部分
+
+> 去除一个数的小数部分，返回整数部分。
+
+```javascript
+Math.trunc(4.1) // 4
+Math.trunc(4.9) // 4
+Math.trunc(-4.1) // -4
+Math.trunc(-4.9) // -4
+Math.trunc(-0.1234) // -0
+```
+
+- 非数值，Math.trunc内部使用Number方法将其先转为数值。
+
+```javascript
+Math.trunc('123.456') // 123
+Math.trunc(true) //1
+Math.trunc(false) // 0
+Math.trunc(null) // 0
+```
+
+- 对于空值和无法截取整数的值，返回NaN。
+
+```javascript
+Math.trunc(NaN);      // NaN
+Math.trunc('foo');    // NaN
+Math.trunc();         // NaN
+Math.trunc(undefined) // NaN
+```
+
+#### （2）Math.sign()判断正负零
+
+> 用来判断一个数到底是正数、负数、还是零。对于非数值，会先将其转换为数值。
+>
+> 它会返回五种值。
+>
+> - 参数为正数，返回`+1`；
+> - 参数为负数，返回`-1`；
+> - 参数为 0，返回`0`；
+> - 参数为-0，返回`-0`;
+> - 其他值，返回`NaN`。
+
+```javascript
+Math.sign(-5) // -1
+Math.sign(5) // +1
+Math.sign(0) // +0
+Math.sign(-0) // -0
+Math.sign(NaN) // NaN
+```
+
+- 如果参数是非数值，会自动转为数值。对于那些无法转为数值的值，会返回`NaN`。
+
+```javascript
+Math.sign('')  // 0
+Math.sign(true)  // +1
+Math.sign(false)  // 0
+Math.sign(null)  // 0
+Math.sign('9')  // +1
+Math.sign('foo')  // NaN
+Math.sign()  // NaN
+Math.sign(undefined)  // NaN
+```
+
+#### 5.指数运算符
+
+#### （1）** 相同的数相乘
+
+```javascript
+2 ** 2 // 4
+2 ** 3 // 8
+```
+
+- 多个指数运算符连用时，是从最右边开始计算的。
+
+```javascript
+// 相当于 2 ** (3 ** 2)
+2 ** 3 ** 2
+// 512
+```
+
+#### （2）**=
+
+- 指数运算符可以与等号结合，形成一个新的赋值运算符（`**=`）。
+
+```javascript
+let a = 1.5;
+a **= 2;
+// 等同于 a = a * a;
+
+let b = 4;
+b **= 3;
+// 等同于 b = b * b * b;
+```
+
+### 六、数组的扩展
+
+#### 1.扩展运算符...
+
+> 扩展运算符（spread）是三个点（`...`）。它好比 rest 参数的逆运算，将一个数组转为用逗号分隔的参数序列。
+
+```javascript
+console.log(...[1, 2, 3])
+// 1 2 3
+
+console.log(1, ...[2, 3, 4], 5)
+// 1 2 3 4 5
+
+[...document.querySelectorAll('div')]
+// [<div>, <div>, <div>]
+```
+
+该运算符主要用于函数调用。
+
+```javascript
+function push(array, ...items) {
+  array.push(...items);
+}
+
+function add(x, y) {
+  return x + y;
+}
+
+const numbers = [4, 38];
+add(...numbers) // 42
+```
+
+#### 2.扩展运算符的应用
+
+#### （1）复制数组
+
+```javascript
+const a1 = [1, 2];
+// 写法一
+const a2 = [...a1];
+// 写法二
+const [...a2] = a1;
+```
+
+#### （2）合并数组
+
+```javascript
+const arr1 = ['a', 'b'];
+const arr2 = ['c'];
+const arr3 = ['d', 'e'];
+//这两种方法都是浅拷贝
+// ES5 的合并数组
+arr1.concat(arr2, arr3);
+// [ 'a', 'b', 'c', 'd', 'e' ]
+
+// ES6 的合并数组
+[...arr1, ...arr2, ...arr3]
+// [ 'a', 'b', 'c', 'd', 'e' ]
+```
+
+#### （3）与解构赋值结合
+
+> 与解构赋值结合起来，用于生成数组。
+
+```javascript
+const [first, ...rest] = [1, 2, 3, 4, 5];
+first // 1
+rest  // [2, 3, 4, 5]
+```
+
+#### （4）字符串
+
+> 将字符串转为真正的数组。
+
+```javascript
+[...'hello']
+// [ "h", "e", "l", "l", "o" ]
+```
+
+- 正确返回字符串长度的函数，可以像下面这样写。
+
+```javascript
+function length(str) {
+  return [...str].length;
+}
+
+length('x\uD83D\uDE80y') // 3
+```
+
+- 凡是涉及到操作四个字节的 Unicode 字符的函数，都有这个问题。因此，最好都用扩展运算符改写。
+
+```javascript
+let str = 'x\uD83D\uDE80y';
+
+str.split('').reverse().join('')
+// 'y\uDE80\uD83Dx'
+
+[...str].reverse().join('')
+// 'y\uD83D\uDE80x'
+```
