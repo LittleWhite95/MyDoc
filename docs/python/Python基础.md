@@ -10,7 +10,7 @@
 a = 111
 ```
 
-#### ii.数值运算
+#### ii.操作符
 
 ```python
 >>>5 + 4  # 加法
@@ -29,7 +29,30 @@ a = 111
 32
 ```
 
-
+| 操 作符 | 名称     | 说明                                                         | 实例                                                         |
+| ------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| +       | 加       | 两个对象相加                                                 | 3 + 5 gives 8. ’a’ + ’b’ gives ’ab’.                         |
+| -       | 减       | 返回一个负数或者两个数相减                                   | -5.2 gives a negative number. 50 - 24 gives 26.              |
+| *       | 乘       | 得到两个数字的乘积或返回重复多次的字符串。                   | 2 * 3 gives 6. ’la’ * 3 gives ’lalala’.                      |
+| **      | 阶乘     | 返回x的y次幂                                                 | 3 ** 4 gives 81 (i.e. 3 * 3 * 3 * 3)                         |
+| /       | 除       | 用x除以y                                                     | 4 / 3 gives 1.333333333333.                                  |
+| //      | 取整     | x除以y，返回整数商                                           | 4 // 3 gives 1.                                              |
+| %       | 取余     | 返回余数                                                     | 8 % 3 gives 2. -25.5 % 2.25 gives 1.5.                       |
+| <<      | 左移     | 将数字的位数向左移动指定的位数。 （每个数字在内存中用位或二进制数字表示，即0和1） | 2 < < 2 gives 8. 2 is represented by 10 in bits. left shifting by 2 bits gives 1000 which represents the decimal 8. |
+| >>      | 右移     | 将数字的位数向右移动指定的位数。                             | 11 > > 1 gives 5. 11 is represented in bits by 1011 which when right shifted by 1 bit gives 101 which is the decimal 5. |
+| &       | 按位与   | 数字的按位与                                                 | 5 & 3 gives 1.                                               |
+| \|      | 按位或   | 数字的按位或                                                 | 5 \| 3 gives 7                                               |
+| ∧       | 按位异或 | 数字的按位异或                                               | 5 ˆ 3 gives 6                                                |
+| ∼       | 按位取反 | x的按位取反是-（x + 1）                                      | ˜5 gives -6                                                  |
+| <       | 小于     | 返回x是否小于y。 所有比较运算符都返回True或False。 请注意这些名称的大写。 | 5 < 3 gives False and 3 < 5 gives True. Comparisons can be chained arbitrarily: 3 < 5 < gives True. |
+| >       | 大于     | 返回x是否大于y。                                             | 5 > 3 returns True. If both operands are numbers, they are first converted to a common type. Otherwise, it always returns False. |
+| <=      | 小于等于 | 返回x是否小于等于y。                                         | x = 3; y = 6; x <= y returns True.                           |
+| >=      | 大于等于 | 返回x是否大于y。                                             | x = 4; y = 3; x >= 3 returns True.                           |
+| ==      | 等于     | 比较对象是否相等                                             | x = 2; y = 2; x == y returns True. x = ’str’; y = ’stR’; x == y returns False. x = ’str’; y = ’str’; x == y returns True. |
+| !=      | 不等于   | 比较对象是否为不相等                                         | x = 2; y = 3; x != y returns True.                           |
+| not     | 非       | 如果x为True，则返回False。 如果x为False，则返回True。        | x = True; not x returns False.                               |
+| and     | 与       | x and y。如果x为False，则x and y返回False，否则返回y的值     | x =False； y =True； 由于x为False，因此x and y返回False。 在这种情况下，Python不会评估y，因为它知道“ and”表达式的左侧为False，这意味着whole表达式将为False，而与其他值无关。 这称为短路评估。 |
+| or      | 或       | x or y。如果x为True，则返回True，否则返回y的值               | x =True； y =False； x or y返回True。 短路评估也适用于此。   |
 
 ### （2）String（字符串）
 
@@ -91,6 +114,22 @@ RunoobTEST
 >>> 'Hi, %s, you have $%d.' % ('Michael', 1000000)
 'Hi, Michael, you have $1000000.'
 ```
+
+#### iii.format格式化
+
+- 0,1为位置元素，用具体值替代
+
+```python
+'{0} is {1} years old'.format(name, age) 
+```
+
+- 当只为{}时，按顺序赋值
+
+```python
+'{} is {} years old'.format(name, age) 
+```
+
+
 
 ### （3）List（列表）
 
@@ -232,6 +271,8 @@ assert 3 > 4 //当需要确保程序中的某个条件为真时，使用assert�
 ```python
 while 条件:
 	循环体
+else:# 可选，当条件不满足时执行
+    语句
 ```
 
 #### ii.for循环
@@ -239,7 +280,37 @@ while 条件:
 ```python
 for 目标 in 表达式:
 	循环体
+else:# 可选，当条件不满足时执行
+    语句
 ```
+
+#### iii.break跳出循环
+
+```python
+while True:
+	s = (input('Enter something : '))
+	if s == 'quit':
+		break
+	print('Length of the string is', len(s))
+print('Done') 
+
+# 当满足条件的时候，跳出循环->打印Done
+```
+
+#### iv.continue跳过本次循环
+
+```python
+while True:
+	s = raw_input('Enter something : ')
+	if s == 'quit':
+		break
+	if len(s) < 3:
+		print('Too small')
+	continue  #当小于3时，跳过这次循环，进入下一次循环
+print('Input is of sufficient length') 
+```
+
+
 
 ### （3）range()生成序列
 
@@ -251,6 +322,32 @@ range([strat,]stop[,step=1])
 > 2. 中括号的参数可选
 > 3. step=1表示默认值为1
 > 4. 不包括stop
+
+## 3.函数
+
+### （1）函数声明和调用
+
+```python
+def sayHello():
+	print('Hello World!') # 函数体
+# 函数结束
+sayHello() #调用函数
+```
+
+##  4.面向对象编程
+
+### （1）类
+
+1.声明一个类和对象
+
+```python
+class Person:
+	pass
+p = Person()
+print(p)
+```
+
+
 
 ## 1.一些常用方法
 
@@ -320,3 +417,78 @@ None
 ```
 
 其他一切都被解释为真！ 
+
+
+
+
+
+
+
+
+
+
+
+```python
+
+
+#!/usr/bin/python
+2 # Filename: objvar.py
+3 4
+class Robot:
+5 '''Represents a robot, with a name.'''
+6 
+7
+#A class variable, counting the number of robots
+8 population = 0
+9
+10 def __init__(self,name):
+11 '''Initializes the data.'''
+12 self.name = name
+13 print('(Initialize {0})'.format(self.name))
+14
+15 #When this person is created, the robot
+16 # adds to the population
+17 Robot.population += 1
+18
+19 def __del__(self):
+20 '''I am dying.'''
+21 print('{0} is being destroyed!'.format(self.name))
+22
+23 Robot.population -= 1
+24
+25 if Robot.population == 0:
+26 print('{0} was the last one.'.format(self.name))
+27 else:
+28 print('There are still {0:d} robots working.'.format(
+Robot.population))
+29
+30 def sayHi(self):
+31 '''Greeting by the robot.
+32
+33 Yeah, they can do that.'''
+34 print('Greetings, my master call me {0}.'.format(self.name)
+)
+35
+36 def howMany():
+37 '''Prints the current population.'''
+38 print('We have {0:d} robots.'.format(Robot.population))
+39 howMany = staticmethod(howMany)
+40
+41 droid1 = Robot('R2-D2')
+42 droid1.sayHi()
+43 Robot.howMany()
+44
+45 droid2 = Robot('C-3P0')
+46 droid2.sayHi()
+47 Robot.howMany()
+48
+49 print("\nRobots can do some work here.\n")
+50
+51 print("Robots have finished their work. So let's destroy them.")
+52
+53 del droid1
+54 del droid2
+55
+56 Robot.howMany() 
+```
+
