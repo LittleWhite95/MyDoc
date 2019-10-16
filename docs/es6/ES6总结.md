@@ -888,3 +888,278 @@ str.split('').reverse().join('')
 [...str].reverse().join('')
 // 'y\uD83D\uDE80x'
 ```
+
+#### 3.Arrray.from()对象转成数组
+
+> 用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括 ES6 新增的数据结构 Set 和 Map）
+
+```javascript
+Array.from(arrayLike[, mapFn[, thisArg]])
+```
+
+> **参数：**
+>
+> - `arrayLike`
+>
+>   想要转换成数组的伪数组对象或可迭代对象。
+>
+> - `mapFn (可选参数)`
+>
+>   如果指定了该参数，新数组中的每个元素会执行该回调函数。
+>
+> - `thisArg (可选参数)`
+>
+>   可选参数，执行回调函数 `mapFn` 时 `this` 对象。
+
+```javascript
+let arrayLike = {
+    '0': 'a',
+    '1': 'b',
+    '2': 'c',
+    length: 3
+};
+// ES6的写法
+let arr2 = Array.from(arrayLike); // ['a', 'b', 'c']
+
+//set结构
+let namesSet = new Set(['a', 'b'])
+Array.from(namesSet) // ['a', 'b']
+
+//字符串
+Array.from([1, 2, 3]) // [1, 2, 3]
+```
+
+- 任何有`length`属性的对象，都可以通过`Array.from`方法转为数组，而此时扩展运算符就无法转换。
+
+```javascript
+Array.from({ length: 3 });
+// [ undefined, undefined, undefined ]
+```
+
+- `Array.from`还可以接受第二个参数，作用类似于数组的`map`方法，用来对每个元素进行处理，将处理后的值放入返回的数组。
+
+```javascript
+Array.from(arrayLike, x => x * x);
+// 等同于
+Array.from(arrayLike).map(x => x * x);
+
+Array.from([1, 2, 3], (x) => x * x)
+// [1, 4, 9]
+```
+
+- 创建重复数组
+
+```javascript
+Array.from({ length: 2 }, () => 'jack')
+// ['jack', 'jack']
+```
+
+- 将字符串转为数组，然后返回字符串的长度
+
+```javascript
+function countSymbols(string) {
+  return Array.from(string).length;
+}
+```
+
+#### 4.Array.of()值转成数组
+
+> 用于将一组值，转换为数组。
+>
+> 返回参数值组成的数组。如果没有参数，就返回一个空数组。
+
+```javascript
+Array.of(3, 11, 8) // [3,11,8]
+Array.of(3) // [3]
+Array.of(3).length // 1
+```
+
+- 创建数组（基本上可以用来替代`Array()`或`new Array()`）
+
+```javascript
+Array.of() // []
+Array.of(undefined) // [undefined]
+Array.of(1) // [1]
+Array.of(1, 2) // [1, 2]
+```
+
+#### 5.copyWithin()内部复制数组
+
+> 在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组。也就是说，使用这个方法，会修改当前数组。
+
+```javascript
+Array.prototype.copyWithin(target, start = 0, end = this.length)
+```
+
+> 它接受三个参数。
+>
+> - target（必需）：从该位置开始替换数据。如果为负值，表示倒数。
+> - start（可选）：从该位置开始读取数据，默认为 0。如果为负值，表示从末尾开始计算。
+> - end（可选）：到该位置前停止读取数据，默认等于数组长度。如果为负值，表示从末尾开始计算。
+
+```javascript
+// 将3号位复制到0号位
+[1, 2, 3, 4, 5].copyWithin(0, 3, 4)
+// [4, 2, 3, 4, 5]
+
+// -2相当于3号位，-1相当于4号位
+[1, 2, 3, 4, 5].copyWithin(0, -2, -1)
+// [4, 2, 3, 4, 5]
+
+// 将3号位复制到0号位
+[].copyWithin.call({length: 5, 3: 1}, 0, 3)
+// {0: 1, 3: 1, length: 5}
+```
+
+#### 6.find() 和 findIndex() 
+
+> `find`方法，用于找出第一个符合条件的数组成员。
+
+```javascript
+arr.find(callback[, thisArg])
+```
+
+> **参数：**
+>
+> - `callback`
+>
+> 在数组每一项上执行的函数，接收 3 个参数：`element`当前遍历到的元素。`index`可选当前遍历到的索引。`array`可选数组本身。
+>
+> - `thisArg`可选
+>
+>   执行回调时用作`this` 的对象。
+
+```javascript
+[1, 4, -5, 10].find((n) => n < 0)
+// -5
+```
+
+上面代码找出数组中第一个小于 0 的成员。
+
+```javascript
+[1, 5, 10, 15].find(function(value, index, arr) {
+  return value > 9;
+}) // 10
+```
+
+> `findIndex`方法的用法与`find`方法非常类似，返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回`-1`。
+
+```javascript
+arr.findIndex(callback[, thisArg])
+```
+
+```javascript
+[1, 5, 10, 15].findIndex(function(value, index, arr) {
+  return value > 9;
+}) // 2
+```
+
+这两个方法都可以发现`NaN`，弥补了数组的`indexOf`方法的不足。
+
+```javascript
+[NaN].indexOf(NaN)
+// -1
+
+[NaN].findIndex(y => Object.is(NaN, y))
+// 0
+```
+
+#### 7.fill()填充数组
+
+> 使用给定值，填充一个数组。
+
+```javascript
+['a', 'b', 'c'].fill(7)
+// [7, 7, 7]
+
+new Array(3).fill(7)
+// [7, 7, 7]
+```
+
+- 接受第二个和第三个参数，用于指定填充的起始位置和结束位置。
+
+```javascript
+['a', 'b', 'c'].fill(7, 1, 2)
+// ['a', 7, 'c']
+```
+
+#### 8.entries()，keys() 和 values()
+
+> `entries()`，`keys()`和`values()`——用于遍历数组。它们都返回一个遍历器对象可以用`for...of`循环进行遍历，唯一的区别是：
+>
+> `keys()`是对键名的遍历、`values()`是对键值的遍历，`entries()`是对键值对的遍历。
+
+```javascript
+for (let index of ['a', 'b'].keys()) {
+  console.log(index);
+}
+// 0
+// 1
+
+for (let elem of ['a', 'b'].values()) {
+  console.log(elem);
+}
+// 'a'
+// 'b'
+
+for (let [index, elem] of ['a', 'b'].entries()) {
+  console.log(index, elem);
+}
+// 0 "a"
+// 1 "b"
+```
+
+如果不使用`for...of`循环，可以手动调用遍历器对象的`next`方法，进行遍历。
+
+```javascript
+let letter = ['a', 'b', 'c'];
+let entries = letter.entries();
+console.log(entries.next().value); // [0, 'a']
+console.log(entries.next().value); // [1, 'b']
+console.log(entries.next().value); // [2, 'c']
+```
+
+#### 9.includes()数组是否包含某值
+
+> 返回一个布尔值，表示某个数组是否包含给定的值
+
+```javascript
+[1, 2, 3].includes(2)     // true
+[1, 2, 3].includes(4)     // false
+[1, 2, NaN].includes(NaN) // true
+```
+
+第二个参数表示搜索的起始位置，默认为`0`。如果第二个参数为负数，则表示倒数的位置，如果这时它大于数组长度（比如第二个参数为`-4`，但数组长度为`3`），则会重置为从`0`开始。
+
+```javascript
+[1, 2, 3].includes(3, 3);  // false
+[1, 2, 3].includes(3, -1); // true
+```
+
+#### 10.flat()，flatMap()拉平嵌套数组
+
+> flat()将嵌套的数组“拉平”，变成一维的数组。该方法返回一个新数组。
+
+```javascript
+[1, 2, [3, 4]].flat()
+// [1, 2, 3, 4]
+```
+
+默认只会“拉平”一层，如果想要“拉平”多层的嵌套数组，可以将`flat()`方法的参数写成一个整数，表示想要拉平的层数，默认为1。
+
+```javascript
+[1, 2, [3, [4, 5]]].flat()
+// [1, 2, 3, [4, 5]]
+
+[1, 2, [3, [4, 5]]].flat(2)
+// [1, 2, 3, 4, 5]
+```
+
+不管有多少层嵌套，都要转成一维数组，可以用`Infinity`关键字作为参数。
+
+```javascript
+[1, [2, [3]]].flat(Infinity)
+// [1, 2, 3]
+```
+
+> flatMap()
