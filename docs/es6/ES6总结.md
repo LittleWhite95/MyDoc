@@ -1138,7 +1138,7 @@ console.log(entries.next().value); // [2, 'c']
 
 #### 10.flat()，flatMap()拉平嵌套数组
 
-> flat()将嵌套的数组“拉平”，变成一维的数组。该方法返回一个新数组。
+> 1. flat()将嵌套的数组“拉平”，变成一维的数组。该方法返回一个新数组。
 
 ```javascript
 [1, 2, [3, 4]].flat()
@@ -1162,4 +1162,219 @@ console.log(entries.next().value); // [2, 'c']
 // [1, 2, 3]
 ```
 
-> flatMap()
+> 2. flatMap()
+>
+> 对原数组的每个成员执行一个函数（相当于执行`Array.prototype.map()`），然后对返回值组成的数组执行`flat()`方法。该方法返回一个新数组，不改变原数组。
+
+```javascript
+// 相当于 [[2, 4], [3, 6], [4, 8]].flat()
+[2, 3, 4].flatMap((x) => [x, x * 2])
+// [2, 4, 3, 6, 4, 8]
+```
+
+### 七、对象的扩展
+
+#### 1.属性的简写表示
+
+#### （1）变量简写
+
+```javascript
+const foo = 'bar';
+const baz = {foo};
+baz // {foo: "bar"}
+
+// 等同于
+const baz = {foo: foo};
+```
+
+```javascript
+function f(x, y) {
+  return {x, y};
+}
+
+// 等同于
+
+function f(x, y) {
+  return {x: x, y: y};
+}
+
+f(1, 2) // Object {x: 1, y: 2}
+```
+
+- 打印对象
+
+```javascript
+let user = {
+  name: 'test'
+};
+
+let foo = {
+  bar: 'baz'
+};
+
+console.log(user, foo)
+// {name: "test"} {bar: "baz"}
+console.log({user, foo})
+// {user: {name: "test"}, foo: {bar: "baz"}}
+```
+
+#### （2）方法简写
+
+```javascript
+ // 等同于hello: function ()...
+  hello() { console.log('我的名字是', this.name); }
+```
+
+#### （3）模块输出
+
+```javascript
+let ms = {};
+
+function getItem (key) {
+  return key in ms ? ms[key] : null;
+}
+
+function setItem (key, value) {
+  ms[key] = value;
+}
+
+function clear () {
+  ms = {};
+}
+
+module.exports = { getItem, setItem, clear };
+// 等同于
+module.exports = {
+  getItem: getItem,
+  setItem: setItem,
+  clear: clear
+};
+```
+
+#### 2.属性名表达式
+
+```javascript
+// 方法一
+obj.foo = true;
+
+// 方法二
+obj['a' + 'bc'] = 123
+```
+
+- 用表达式作为对象的属性名
+
+```javascript
+let lastWord = 'last word';
+
+const a = {
+  'first word': 'hello',
+  [lastWord]: 'world'
+};
+
+a['first word'] // "hello"
+a[lastWord] // "world"
+a['last word'] // "world"
+```
+
+#### 3.方法的name属性
+
+> 返回函数名
+
+#### （1）普通方法
+
+```javascript
+const person = {
+  sayName() {
+    console.log('hello!');
+  },
+};
+
+person.sayName.name   // "sayName"
+```
+
+#### （2）对象使用getter和setter
+
+```javascript
+const obj = {
+  get foo() {},
+  set foo(x) {}
+};
+
+const descriptor = Object.getOwnPropertyDescriptor(obj, 'foo');
+
+descriptor.get.name // "get foo"
+descriptor.set.name // "set foo"
+```
+
+#### （3）bind方法创造的函数
+
+`name`属性返回`bound`加上原函数的名字
+
+```javascript
+var doSomething = function() {
+  // ...
+};
+doSomething.bind().name // "bound doSomething"
+```
+
+#### （4）Function构造函数创造
+
+`name`属性返回`anonymous`
+
+```javascript
+(new Function()).name // "anonymous"
+```
+
+#### （5）对象的方法是一个 Symbol 值
+
+`name`属性返回的是这个 Symbol 值的描述。
+
+```javascript
+const key1 = Symbol('description');
+const key2 = Symbol();
+let obj = {
+  [key1]() {},
+  [key2]() {},
+};
+obj[key1].name // "[description]"
+obj[key2].name // ""
+```
+
+### 八、对象的新增方法
+
+#### 1.Object.is()
+
+> 比较两个值是否严格相等
+
+```javascript
+Object.is('foo', 'foo')
+// true
+Object.is({}, {})
+// false
+```
+
+#### 2.Object.assign()对象合并
+
+> 1. 用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。
+> 2. 第一个参数是目标对象，后面的参数都是源对象。
+> 3. 除了字符串会以数组形式，拷贝入目标对象，其他值都不会产生效果。
+
+```javascript
+const target = { a: 1 };
+
+const source1 = { b: 2 };
+const source2 = { c: 3 };
+
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+```
+
+#### （1）为对象添加属性
+
+
+
+#### （2）为对象添加方法
+
+#### （3）克隆对象
+
+#### （4）合并多个对象

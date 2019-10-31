@@ -129,7 +129,11 @@ RunoobTEST
 '{} is {} years old'.format(name, age) 
 ```
 
+- 使用关键字（变量）
 
+```python
+"{name} wants to eat {food}".format(name="Bob",food="lasagna")
+```
 
 ### （3）List（列表）
 
@@ -154,8 +158,10 @@ list = [ 'abcd', 786 , 2.23, 'runoob', 70.2 ]
 tinylist = [123, 'runoob']
 print (list)            # 输出完整列表
 print (list[0])         # 输出列表第一个元素
+print (list[-1])         # 输出列表最后一个元素
 print (list[1:3])       # 从第二个开始输出到第三个元素
 print (list[2:])        # 输出从第三个元素开始的所有元素
+print (list[:3]) 		# 从第一个开始输出到第三个元素
 print (tinylist * 2)    # 输出两次列表
 print (list + tinylist) # 连接列表
 ```
@@ -170,6 +176,57 @@ abcd
 [123, 'runoob', 123, 'runoob']
 ['abcd', 786, 2.23, 'runoob', 70.2, 123, 'runoob']
 ```
+
+#### i.append()添加
+
+> 把元素添加到列表的尾部
+
+```python
+#li = [2,3]
+li.append(1) #=> [2,3,1]
+```
+
+#### ii.pop()移除
+
+> 移除最后一个元素
+
+```python
+#li=[1,2,3]
+li.pop() #=> [1,2]
+```
+
+#### iii.del删除
+
+> 删除列表中的任意元素
+
+```python
+#li=[1,2,3]
+del li[1] #=> [1,3]
+```
+
+#### iv.+列表相加
+
+```python
+#li=[1,2,3],other_li=[3,4,5]
+li+other_li #=> [1,2,3,3,4,5]
+```
+
+#### v.extend()合并
+
+```
+#li=[1,2,3]
+#other_li=[3,4,5]
+li.extend(other_li)
+```
+
+#### vi.in检查是否存在
+
+```python
+#li=[1,2,3]
+1 in li #=> True
+```
+
+
 
 ### （4）Tuple（元组）
 
