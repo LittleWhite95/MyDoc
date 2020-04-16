@@ -1371,10 +1371,318 @@ target // {a:1, b:2, c:3}
 
 #### （1）为对象添加属性
 
-
+```javascript
+let obj = {}
+let x = 1,y = 2;
+Object.assign(obj, {x, y}); // {x:1,y:2}
+```
 
 #### （2）为对象添加方法
 
+```javascript
+Object.assign(SomeClass.prototype, {
+  someMethod(arg1, arg2) {
+    ···
+  },
+  anotherMethod() {
+    ···
+  }
+});
+```
+
 #### （3）克隆对象
 
+```javascript
+let obj = {'name':'mike','age':20}
+let newObj = Object.assign({}, obj)//{'name':'mike','age':20}
+```
+
 #### （4）合并多个对象
+
+i.将多个对象合并到某个对象
+
+```javascript
+let target = {'mail':'fsdf'}
+let sources = [{'age':111},{'name':'ttt'}]
+const merge =
+  (target, ...sources) => Object.assign(target, ...sources);
+//{mail: "fsdf", age: 111, name: "ttt"}
+```
+
+ii.合并后返回一个新对象
+
+```javascript
+let target = {'mail':'fsdf'}
+let sources = [{'age':111},{'name':'ttt'}]
+const merge = (...sources) => Object.assign(target, ...sources);
+//{mail: "fsdf", age: 111, name: "ttt"}
+```
+
+#### （5）为属性指定默认值
+
+```javascript
+const DEFAULTS = {
+  url: {
+    host: 'example.com',
+    port: 7070
+  },
+};
+function processContent(options) {
+  options = Object.assign({}, DEFAULTS, options);
+  console.log(options);
+  // ...
+}
+processContent({ url: {port: 8000} })
+// {
+//   url: {port: 8000}
+// }
+```
+
+[^]: 由于存在浅拷贝的问题，`DEFAULTS`对象和`options`对象的所有属性的值，最好都是简单类型，不要指向另一个对象。否则，`DEFAULTS`对象的该属性很可能不起作用。
+
+#### 3.Object.keys()返回键名（非继承）
+
+```javascript
+var obj = { foo: 'bar', baz: 42 };
+Object.keys(obj)
+// ["foo", "baz"]
+```
+
+#### 4.Object.values()返回键值（非继承）
+
+```javascript
+const obj = { foo: 'bar', baz: 42 };
+Object.values(obj)
+// ["bar", 42]
+```
+
+- 会过滤属性名为 Symbol 值的属性。
+
+```javascript
+Object.values({ [Symbol()]: 123, foo: 'abc' });
+// ['abc']
+```
+
+- 方法的参数是一个字符串，会返回各个字符组成的一个数组。
+
+```javascript
+Object.values('foo')
+// ['f', 'o', 'o']
+```
+
+#### 5.Object.entries() 返回键值对（非继承）
+
+```javascript
+const obj = { foo: 'bar', baz: 42 };
+Object.entries(obj)
+// [ ["foo", "bar"], ["baz", 42] ]
+```
+
+- 遍历对象的属性
+
+```javascript
+let obj = { one: 1, two: 2 };
+for (let [k, v] of Object.entries(obj)) {
+  console.log(
+    `${JSON.stringify(k)}: ${JSON.stringify(v)}`
+  );
+}
+// "one": 1
+// "two": 2
+```
+
+- 将对象转为真正的`Map`结构
+
+```javascript
+const obj = { foo: 'bar', baz: 42 };
+const map = new Map(Object.entries(obj));
+map // Map { foo: "bar", baz: 42 }
+```
+
+#### 6.Object.fromEntries() 键值对数组转为对象
+
+> `Object.entries()`的逆操作，将键值对的数据结构还原为对象
+
+- 普通使用
+
+```javascript
+Object.fromEntries([
+  ['foo', 'bar'],
+  ['baz', 42]
+])
+// { foo: "bar", baz: 42 }
+```
+
+- 将 Map 结构转为对象
+
+```javascript
+// 例一
+const entries = new Map([
+  ['foo', 'bar'],
+  ['baz', 42]
+]);
+
+Object.fromEntries(entries)
+// { foo: "bar", baz: 42 }
+
+// 例二
+const map = new Map().set('foo', true).set('bar', false);
+Object.fromEntries(map)
+// { foo: true, bar: false }
+```
+
+- 配合`URLSearchParams`对象，将查询字符串转为对象
+
+```javascript
+Object.fromEntries(new URLSearchParams('foo=bar&baz=qux'))
+// { foo: "bar", baz: "qux" }
+```
+
+### 九、Symbol
+
+#### 1.概述
+
+> 1. 对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的 Symbol 类型。凡是属性名属于 Symbol 类型，就都是独一无二的，可以保证不会与其他属性名产生冲突
+> 2. 不能与其他类型的值进行运算，会报错
+
+```javascript
+let s = Symbol();
+
+typeof s
+// "symbol"
+```
+
+- 接受一个字符串作为参数，表示对 Symbol 实例的描述
+
+参数只是表示对当前 Symbol 值的描述，因此相同参数的`Symbol`函数的返回值是不相等的
+
+```javascript
+let s1 = Symbol('foo');
+let s2 = Symbol('bar');
+
+s1 // Symbol(foo)
+s2 // Symbol(bar)
+
+s1.toString() // "Symbol(foo)"
+s2.toString() // "Symbol(bar)"
+```
+
+- Symbol 值可以显式转为字符串
+
+```javascript
+let sym = Symbol('My symbol');
+
+String(sym) // 'Symbol(My symbol)'
+sym.toString() // 'Symbol(My symbol)'
+```
+
+#### 2.实例属性description
+
+- 直接返回 Symbol 的描述
+
+```javascript
+const sym = Symbol('foo');
+
+sym.description // "foo"
+```
+
+#### 3.作为属性名
+
+> 用于对象的属性名，就能保证不会出现同名的属性
+
+```javascript
+let mySymbol = Symbol();
+
+// 第一种写法
+let a = {};
+a[mySymbol] = 'Hello!';
+
+// 第二种写法
+let a = {
+  [mySymbol]: 'Hello!'
+};
+
+// 第三种写法
+let a = {};
+Object.defineProperty(a, mySymbol, { value: 'Hello!' });
+
+// 以上写法都得到同样结果
+a[mySymbol] // "Hello!"
+```
+
+- 作为对象属性名时，不能用点运算符
+
+```javascript
+const mySymbol = Symbol();
+const a = {};
+
+a.mySymbol = 'Hello!';
+a[mySymbol] // undefined
+a['mySymbol'] // "Hello!"
+```
+
+- 在对象的内部，使用 Symbol 值定义属性时，Symbol 值必须放在方括号之中。
+
+```javascript
+let s = Symbol();
+
+let obj = {
+  [s]: function (arg) { ... }
+};
+
+obj[s](123);
+```
+
+#### 4.属性名的遍历
+
+> Symbol 作为属性名，遍历对象的时候，该属性不会出现在`for...in`、`for...of`循环中，也不会被`Object.keys()`、`Object.getOwnPropertyNames()`、`JSON.stringify()`返回。
+
+#### （1）`Object.getOwnPropertySymbols()`方法
+
+> 可以获取指定对象的所有 Symbol 属性名。该方法返回一个数组，成员是当前对象的所有用作属性名的 Symbol 值。
+
+```javascript
+const obj = {};
+let a = Symbol('a');
+let b = Symbol('b');
+
+obj[a] = 'Hello';
+obj[b] = 'World';
+
+const objectSymbols = Object.getOwnPropertySymbols(obj);
+
+objectSymbols
+// [Symbol(a), Symbol(b)]
+```
+
+#### 5.Symbol.for()注册symbol
+
+> 1. 它接受一个字符串作为参数，然后搜索有没有以该参数作为名称的 Symbol 值。如果有，就返回这个 Symbol 值，否则就新建一个以该字符串为名称的 Symbol 值，并将其注册到全局。
+>
+> 2. 全局环境的，不管有没有在全局环境运行
+
+```javascript
+let s1 = Symbol.for('foo');
+let s2 = Symbol.for('foo');
+
+s1 === s2 // true
+```
+
+- Symbol.for()`与`Symbol()区别
+
+1. 前者会被登记在全局环境中供搜索，后者不会。
+2. `Symbol.for()`不会每次调用就返回一个新的 Symbol 类型的值，而是会先检查给定的`key`是否已经存在，如果不存在才会新建一个值。比如，如果你调用`Symbol.for("cat")`30 次，每次都会返回同一个 Symbol 值，但是调用`Symbol("cat")`30 次，会返回 30 个不同的 Symbol 值。
+
+#### 6.Symbol.keyFor() 
+
+> 返回一个已登记的 Symbol 类型值的`key`
+
+```javascript
+let s1 = Symbol.for("foo");
+Symbol.keyFor(s1) // "foo"
+
+let s2 = Symbol("foo");
+Symbol.keyFor(s2) // undefined
+```
+
+### 十、Set和Map数据结构

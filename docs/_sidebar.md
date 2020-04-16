@@ -3,4 +3,4 @@
 - [（三）ES6总结](es6/ES6总结)
 - [（四）Linux命令](linux/Linux命令)
 - [（五）Python基础](python/Python基础)
-
+- [（六）JavaScript高级编程读书笔记](javascript/JavaScript高级编程读书笔记)
