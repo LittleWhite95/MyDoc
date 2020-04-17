@@ -42,23 +42,23 @@
 - NaN与任何值不相等
 - 通过isNaN()判断是否为NaN，任何不能转换成数值的值都会返回true。比如字符串“blue”。
 
-![image-20200415174813706](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200415174813706.png)
+![image-20200415174813706](..\img\image-20200415174813706.png)
 
 ##### (2)数值转换
 
 ###### i.Number()函数
 
-![image-20200415180202040](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200415180202040.png)
+![image-20200415180202040](..\img\image-20200415180202040.png)
 
 ###### ii.parseInt()函数--常用
 
 > 1. 传入字符串时：（发现非数字字符就会停止解析）
 >
-> ![image-20200416094725019](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416094725019.png)
+> ![image-20200416094725019](..\img\image-20200416094725019.png)
 >
 > 	  2. 可以指定第二个参数，设置转换时使用的基数（即多少进制）
 >
-> ![image-20200416095213032](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416095213032.png)
+> ![image-20200416095213032](..\img\image-20200416095213032.png)
 
 #### 5.String类型
 
@@ -74,7 +74,7 @@
 
 - 能将任何值转成字符串（包含null和undefined)
 
-  ![image-20200416104253709](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416104253709.png)
+  ![image-20200416104253709](..\img\image-20200416104253709.png)
 
 ### 二.操作符
 
@@ -91,25 +91,25 @@
 | 浮点数值                   | 执行加减1                                                    |
 | 对象                       | 调用valueOf()获取可操作的值。应用上述规则。若为NaN，调用toString()应用上述规则 |
 
-![image-20200416112453131](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416112453131.png)
+![image-20200416112453131](..\img\image-20200416112453131.png)
 
 #### 2.布尔操作符
 
 ##### (1)逻辑非!
 
-![image-20200416152521444](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416152521444.png)
+![image-20200416152521444](..\img\image-20200416152521444.png)
 
 - 使用两个!!的效果和Boolean()函数相同
 
-![image-20200416152628624](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416152628624.png)
+![image-20200416152628624](..\img\image-20200416152628624.png)
 
 ##### (2)逻辑与&&
 
-![image-20200416153135136](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416153135136.png)
+![image-20200416153135136](..\img\image-20200416153135136.png)
 
 ##### (3)逻辑或||
 
-![image-20200416153227166](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416153227166.png)
+![image-20200416153227166](..\img\image-20200416153227166.png)
 
 #### 3.关系操作符
 
@@ -121,24 +121,24 @@
 | 其中一个是对象   | 调用valueOf()获取可操作的值。应用上述规则比较。若无该方法，调用toString()应用上述规则比较 |
 | 其中一个是布尔值 | 将其转成数值，进行数值比较                                   |
 
-- 字符串不能转成一个合理数值是，会转成NaN，任何操作数和NaN比较都返回false![image-20200416155425437](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416155425437.png)
+- 字符串不能转成一个合理数值是，会转成NaN，任何操作数和NaN比较都返回false![image-20200416155425437](..\img\image-20200416155425437.png)
 
 
 
 - 比较两个字符串时，将字符串转成相同的大小写进行比较
 
-![image-20200416155342133](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416155342133.png)
+![image-20200416155342133](..\img\image-20200416155342133.png)
 
 #### 4.相等操作符
 
 ##### (1)相等和不相等
 
-![image-20200416160449529](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416160449529.png)
+![image-20200416160449529](..\img\image-20200416160449529.png)
 
 ##### (2)全等和不全等
 
-- === 只在两个操作数未经转换就相等的时候返回true![image-20200416160856266](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416160856266.png)
-- !==两个操作数未经转换就不相等的时候返回true![image-20200416160940930](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416160940930.png)
+- === 只在两个操作数未经转换就相等的时候返回true![image-20200416160856266](..\img\image-20200416160856266.png)
+- !==两个操作数未经转换就不相等的时候返回true![image-20200416160940930](..\img\image-20200416160940930.png)
 
 ### 三.语句
 
@@ -189,7 +189,7 @@ function sayHi(){
 
 函数中的参数其实是一个arguments对象
 
-![image-20200416170250062](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416170250062.png)
+![image-20200416170250062](..\img\image-20200416170250062.png)
 
 - 没有传递值的命名参数会被自动赋值为undefined
 - 修改命名参数不会改变arguments中对应的值
@@ -202,7 +202,7 @@ function sayHi(){
 
 - 函数参数是按值传递，可以想象参数为局部变量
 
-![image-20200416172514877](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416172514877.png)
+![image-20200416172514877](..\img\image-20200416172514877.png)
 
 #### 2.检测类型
 
@@ -437,7 +437,7 @@ console.log(colors.valueOf());   //new Array(3)
 >
 > 示例：
 >
-> ![image-20200416212843947](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416212843947.png)
+> ![image-20200416212843947](..\img\image-20200416212843947.png)
 
 2. slice()
 
@@ -449,15 +449,15 @@ console.log(colors.valueOf());   //new Array(3)
 >
 > 示例：
 >
-> ![image-20200416213134951](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416213134951.png)
+> ![image-20200416213134951](..\img\image-20200416213134951.png)
 
 3. splice()
 
 > 主要用途向数组的中部插入项
 
-![image-20200416213227607](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416213227607.png)
+![image-20200416213227607](..\img\image-20200416213227607.png)
 
-![image-20200416213254405](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200416213254405.png)
+![image-20200416213254405](..\img\image-20200416213254405.png)
 
 #### 9.位置方法
 
