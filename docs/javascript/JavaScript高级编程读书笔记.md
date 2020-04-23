@@ -598,8 +598,71 @@ console.log(end - start);//获取时间差
 
 #### 1.创建正则表达式
 
+##### (1)正则表达式字面量
+
 ```javascript
 var expression = / pattern  / flags;
+
+//匹配字符串中所有带有“at”的实例
+var pattern1 = /at/g;
+//匹配第一个“bat”或“cat”,不区分大小写
+var pattern2 = /[bc]at/i;
 ```
 
-##### (1)模式（pattern）
+###### i.模式（pattern）
+
+任何简单或复杂的正则表达式
+
+###### ii.标志（flags）
+
+支持三个标志：
+
+![image-20200423171726103](../img/image-20200423171726103.png)
+
+##### (2)构造函数
+
+```javascript
+//匹配第一个“bat”或“cat”,不区分大小写
+var pattern2 = new RegExp("[bc]at","i");
+```
+
+#### 2.实例方法
+
+#### (1)exec()
+
+> 接收参数：要应用模式的字符串
+>
+> 返回：包含第一个匹配项信息的数组。包含两个属性：index和input
+>
+> 1. index  表示匹配项在字符串中的位置
+> 2. input  应用正则表达式的字符串
+
+```javascript
+var text = "cat, bat, sat, fat";
+var pattern = /.at/g;
+var matches = pattern.exec(text);
+alert(matches.index);   //0
+alert(matches[0]);      //cat
+alert(matches[1]);      //bat
+alert(matches[2]);      //sat
+```
+
+每次返回一个匹配项。如果未设置全局标识，智慧返回第一个匹配项的信息，反之，继续查找新的匹配项。
+
+#### (2)test()
+
+> 用于：查看目标字符串是否与某个模式匹配，但不需要知道文本内容
+>
+> 接收参数：字符串参数
+>
+> 返回：在模式和该参数匹配时返回true，否则返回false
+
+```javascript
+var text = "000-00-0000";
+var pattern = /\d{3}-\d{2}-\d{4}/;
+
+if(pattern.test(text)){
+    alert(“The pattern was matched.”);
+}
+```
+
