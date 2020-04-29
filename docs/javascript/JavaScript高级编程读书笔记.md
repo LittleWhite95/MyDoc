@@ -628,7 +628,7 @@ var pattern2 = new RegExp("[bc]at","i");
 
 #### 2.实例方法
 
-#### (1)exec()
+##### (1)exec()
 
 > 接收参数：要应用模式的字符串
 >
@@ -649,7 +649,7 @@ alert(matches[2]);      //sat
 
 每次返回一个匹配项。如果未设置全局标识，智慧返回第一个匹配项的信息，反之，继续查找新的匹配项。
 
-#### (2)test()
+##### (2)test()
 
 > 用于：查看目标字符串是否与某个模式匹配，但不需要知道文本内容
 >
@@ -664,5 +664,317 @@ var pattern = /\d{3}-\d{2}-\d{4}/;
 if(pattern.test(text)){
     alert(“The pattern was matched.”);
 }
+```
+
+### 五.Function类型
+
+#### 1.定义函数
+
+> 1. 函数其实是对象，每个函数都是Function类型的实例，拥有属性和方法
+> 2. 函数名是指向函数对象的指针，不会与某个函数绑定
+
+##### (1)函数声明语法
+
+```javascript
+function sum(num1,num2){
+	return num1 + num2;
+}
+```
+
+##### (2)函数表达式定义
+
+```javascript
+var sum = function(num1,num2){
+	return num1 + num2;
+}
+```
+
+#### 2.函数内部属性
+
+##### (1)arguments
+
+> 1. arguments是类数组对象，包含传入函数中的所有参数
+>
+> 2. 该对象拥有一个callee属性，指向拥有这个对象的函数
+
+```javascript
+//使用callee消除递归中的耦合
+function factorial(num){
+    if(num <=1 ){
+        return 1;
+    }else {
+        return num * arguments.callee(num - 1);
+    }
+}
+```
+
+##### (2)this
+
+> 引用的是函数用于执行的环境对象(当在网页全局作用域中调用函数时，this对象引用的就是window)
+
+```javascript
+window.color = “red”;
+var o = {color:"blue"};
+function sayColor(){
+	alert(this.color);
+}
+sayColor(); //"red"
+
+o.sayColor = sayColor();
+o.sayColor();  //"blue"
+```
+
+#### 3.函数属性和方法
+
+##### (1)属性
+
+1. length  函数希望接收的命名参数的个数
+
+```javascript
+function sum(n1,n2){
+  return n1+n2;
+}
+function say(){
+  return "hi";
+}
+sum.length;   //2
+say.length;   //0
+```
+
+2. prototype
+
+不可枚举，无法使用for-in查找
+
+##### (2)方法
+
+1. apply() (非继承)
+
+> 作用：在特定的作用域中调用函数，相当于设置函数体内this对象的值
+>
+> 参数：
+>
+> - 在其中运行函数的作用域this
+> - 参数数组（可以是Array实例，或者是arguments对象）
+
+```javascript
+function sum(n1,n2){
+  return n1+n2;
+}
+function callSum1(n1,n2){
+  return sum.apply(this,arguments);
+}
+function callSum2(n1,n2){
+  return sum.apply(this,[n1,n2]);
+}
+```
+
+2. call() (非继承)
+
+> 作用：在特定的作用域中调用函数，相当于设置函数体内this对象的值
+>
+> 参数：
+>
+> - 在其中运行函数的作用域this
+> - 其余参数是直接传递给函数，每个参数必须枚举出来
+
+```javascript
+function sum(n1,n2){
+  return n1+n2;
+}
+function callSum1(n1,n2){
+  return sum.call(this,n1,n2);
+}
+```
+
+#### 适用场景：扩充函数的作用域
+
+```javascript
+window.color = “red”;
+var o = {color:"blue"};
+function sayColor(){
+	alert(this.color);
+}
+sayColor(); //"red"
+
+sayColor.call(this);    //"red"
+sayColor.call(window);  //"red"
+sayColor.call(o);   	//"blue"
+```
+
+3. bind()
+
+> 创建一个函数的实例，其this值会被绑定到传给bind()函数的值
+
+```javascript
+window.color = “red”;
+var o = {color:"blue"};
+function sayColor(){
+	alert(this.color);
+}
+var objectSayColor = sayColor.bind(o);
+objectSayColor();    //blue
+```
+
+### 六.基本包装类型
+
+#### 1.Boolean类型
+
+```javascript
+var booleanObject = new Boolean(true);
+```
+
+| 名称            | 转换成布尔值 | typeof返回值 | instanceof返回值 |
+| --------------- | ------------ | ------------ | ---------------- |
+| Boolean对象     | ture         | “object”     | true             |
+| Boolean基本类型 | false        | “boolean”    | false            |
+
+#### 2.Number类型
+
+```javascript
+var numberObject = new Number(10);
+```
+
+##### (1)toFixed()
+
+按照指定的小数位返回数值的字符串表示，传入2表示显示2位小数（若小数位比指定多，则四舍五入）
+
+```javascript
+var num = 10;
+alert(num.toFixed(2));  //"10.00"
+```
+
+###### (2)toPrecision()
+
+自动判断返回固定大小（fixed）格式或者指数（exponential）格式
+
+> 参数：表示数值的所有数字的位数（不包括指数部分）
+
+```javascript
+var num = 99;
+alert(num.toPrecision(1));  //"1e+2"
+alert(num.toPrecision(2));  //"99"
+alert(num.toPrecision(3));  //"99.0",三位数表示99
+```
+
+#### 3.String类型
+
+```javascript
+var stringObject = new String("hello");
+```
+
+##### (1)字符串操作方法
+
+1. concat()
+
+> 将一个或多个字符串拼接起来，返回拼接得到的新字符串(一般使用+号拼接更方便)
+
+```javascript
+var str = "hello";
+var result = str.concat("world","!"); // "helloworld!"
+```
+
+2. slice()、substr()和substring()
+
+| 方法名    | 参数（接收一个或两个参数，若不传第二参数，以长度为结束位置） | 返回       | 备注                                                         |
+| --------- | ------------------------------------------------------------ | ---------- | ------------------------------------------------------------ |
+| slice     | 参数1指定子字符串的开始位置，参数2子字符串的截止的位置（不包括当前位置） | 一个字符串 | 传入的负值与字符串长度相加                                   |
+| substr    | 参数1指定子字符串的开始位置，参数2返回的字符个数             | 一个字符串 | 负的第一个参数加上字符串的长度，负的第二个参数转成0（即返回空串） |
+| substring | 参数1指定子字符串的开始位置，参数2子字符串的截止的位置（不包括当前位置） | 一个字符串 | 把负值参数都转为0                                            |
+
+##### (2)trime()方法
+
+返回一个字符串副本，删除前置以及后缀的所有空格
+
+##### (3)字符串的模式匹配方法
+
+1. match()
+
+> 与RegExp的exec()方法相同
+>
+> 参数：接收一个参数（正则表达式或RegExp对象）
+>
+> 返回：数组（第一个项是与整个模式匹配的字符串，之后的每一项（如果有）保存着与正则表达式			 中的捕获组匹配的字符串）
+
+```javascript
+var text = "cat, bat, sat, fat";
+var pattern = /.at/;
+
+//与pattern.exec(text)相同
+var matches = text.match(pattern);
+alert(matches.index);      //0
+alert(matches[0]);         //"cat"
+alert(matches.lastIndex);  //0
+```
+
+2. search()
+
+> 与RegExp的exec()方法相同
+>
+> 参数：接收一个参数（正则表达式或RegExp对象）
+>
+> 返回：字符串中第一个匹配项的索引，若找不到，则返回-1
+
+```javascript
+var text = "cat, bat, sat, fat";
+var pos = text.search(/at/);
+alert(pos);  //1
+```
+
+3. replace()
+
+> 与RegExp的exec()方法相同
+>
+> 参数：a一个字符串或RegExp对象
+>
+> ​			 b 一个字符串或一个函数
+>
+> 备注：若第一个参数是字符串，只会替换第一个子字符串
+>
+> ​			 替换所有字符串，唯一方法是提供正则表达式，指定全局标志（g）
+
+```javascript
+var text = "cat, bat, sat, fat";
+var result = text.replace("at","ond");
+alert(result);    //"cond, bat, sat, fat"
+
+result = text.replace(/at/g,"ond");
+alert(result);    //"cond, bond, sond, fond"
+```
+
+### 七.单体内置对象
+
+#### 1.Math对象
+
+##### (1)属性
+
+![image-20200429174620397](../img/image-20200429174620397.png)
+
+##### (2)min()和max()方法
+
+> 定义：返回数组中的最大值或最小值
+>
+> 参数：可接收多个数值参数
+
+```javascript
+var max = Math.max(3,54,32,16);
+alert(max);    //54
+```
+
+```javascript
+var values = [1,24,53,3,2,3];
+var max = Math.max.apply(Math,values);
+```
+
+##### (3)舍入方法
+
+![image-20200429175058055](../img/image-20200429175058055.png)
+
+##### (4)random()
+
+返回一个介于0到1之间的随机数，不包括0和1
+
+```javascript
+//返回一个1到10之间的值，包括1和10
+var num = Math.floor(Math.random() * 10 + 1);
 ```
 
