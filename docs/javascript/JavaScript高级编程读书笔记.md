@@ -978,3 +978,11 @@ var max = Math.max.apply(Math,values);
 var num = Math.floor(Math.random() * 10 + 1);
 ```
 
+#### 2.Global对象
+
+一般无法直接访问Global对象，Web浏览器实现了承担该角色的window对象
+
+## （四）面向对象的程序设计
+
+
+
