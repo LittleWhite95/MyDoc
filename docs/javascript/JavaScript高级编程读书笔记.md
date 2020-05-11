@@ -843,7 +843,7 @@ var num = 10;
 alert(num.toFixed(2));  //"10.00"
 ```
 
-###### (2)toPrecision()
+##### (2)toPrecision()
 
 自动判断返回固定大小（fixed）格式或者指数（exponential）格式
 
